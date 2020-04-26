@@ -1,21 +1,26 @@
-import 'package:snake101010/config.dart';
+import 'package:get_it/get_it.dart';
+
 import 'package:snake101010/models/my_point.dart';
+import 'package:snake101010/providers/config.dart';
 
 enum Direction { up, right, down, left }
 
 class Snake {
-  List<MyPoint> body;
   Direction direction;
+  List<MyPoint> body;
   bool moving, dead;
+  Config config;
 
-  Snake({this.body, this.direction, this.moving}) {
+  Snake({this.body, this.direction, this.moving, this.dead}) {
+    config = GetIt.I<Config>();
     dead = dead ?? false;
     moving = moving ?? true;
+    direction = direction ?? Direction.right;
     body = body ??
         [
-          MyPoint(Config.fieldWidth ~/ 2 + 1, Config.fieldHeight ~/ 2 + 1),
-          MyPoint(Config.fieldWidth ~/ 2 + 1, Config.fieldHeight ~/ 2 + 2),
-          MyPoint(Config.fieldWidth ~/ 2 + 2, Config.fieldHeight ~/ 2 + 2)
+          MyPoint(config.fieldWidth ~/ 2, config.fieldHeight ~/ 2),
+          MyPoint(config.fieldWidth ~/ 2, config.fieldHeight ~/ 2 + 1),
+          MyPoint(config.fieldWidth ~/ 2 + 1, config.fieldHeight ~/ 2 + 1)
         ];
   }
   MyPoint get head => body.first;
@@ -24,26 +29,26 @@ class Snake {
   bool contains(MyPoint point) => body.contains(point);
 
   MyPoint addHead() {
-    MyPoint nh = MyPoint(head.x, head.y);
+    MyPoint newHead = MyPoint(head.x, head.y);
     switch (direction) {
       case Direction.up:
-        nh.y = (Config.fieldHeight + nh.y - 1) % Config.fieldHeight;
+        newHead.y = (config.fieldHeight + newHead.y - 1) % config.fieldHeight;
         break;
       case Direction.right:
-        nh.x = (Config.fieldWidth + nh.x + 1) % Config.fieldWidth;
+        newHead.x = (config.fieldWidth + newHead.x + 1) % config.fieldWidth;
         break;
       case Direction.down:
-        nh.y = (Config.fieldHeight + nh.y + 1) % Config.fieldHeight;
+        newHead.y = (config.fieldHeight + newHead.y + 1) % config.fieldHeight;
         break;
       case Direction.left:
       default:
-        nh.x = (Config.fieldWidth + nh.x - 1) % Config.fieldWidth;
+        newHead.x = (config.fieldWidth + newHead.x - 1) % config.fieldWidth;
     }
-    if (contains(nh)) {
+    if (contains(newHead)) {
       dead = true;
       moving = false;
     } else {
-      body.insert(0, nh);
+      body.insert(0, newHead);
     }
     return head;
   }

@@ -1,78 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
-import 'package:snake101010/game.dart';
+import 'package:snake101010/providers/config.dart';
+import 'package:snake101010/providers/game_state.dart';
+import 'package:snake101010/view/menu.dart';
 
 void main() {
-  runApp(Snake());
+  // _initDb();
+  _initServices();
+
+  runApp(Game());
 }
 
-class Snake extends StatelessWidget {
-  const Snake({Key key}) : super(key: key);
+_initServices() {
+  final _sl = GetIt.instance;
+  _sl.registerSingleton<Config>(Config());
+  _sl.registerSingleton<GameState>(GameState());
+}
+
+class Game extends StatelessWidget {
+  const Game({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Snake",
-      home: Menu(),
+      home: MenuView(),
       color: Colors.black,
-      theme: ThemeData(
-        primaryColor: Colors.black,
-        // primarySwatch: Colors.black,
-      ),
-    );
-  }
-}
-
-class Menu extends StatelessWidget {
-  const Menu({Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black54,
-      body: SafeArea(
-        child: Container(
-          alignment: Alignment.center,
-          child: Column(
-            children: [
-              FlatButton(
-                child: Text(
-                  'PLAY',
-                  style: TextStyle(color: Colors.white, fontSize: 48),
-                ),
-                onPressed: () => Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => GameScreen())),
-              ),
-              FlatButton(
-                child: Text(
-                  'Highscore',
-                  style: TextStyle(color: Colors.white, fontSize: 48),
-                ),
-                onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => Scaffold(
-                          appBar: AppBar(
-                            title: Text('highscore'),
-                          ),
-                        ))),
-              ),
-              FlatButton(
-                child: Text(
-                  'Settings',
-                  style: TextStyle(color: Colors.white, fontSize: 48),
-                ),
-                onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => Scaffold(
-                          appBar: AppBar(
-                            title: Text('settings'),
-                          ),
-                        ))),
-              ),
-            ],
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-          ),
-        ),
-      ),
     );
   }
 }

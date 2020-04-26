@@ -41,16 +41,16 @@ class GameState {
 
   Bounty nextBounty() => Bounty(emptySpot(),
       number: bounty.number + 1,
-      isMega: (++bounty.number % 8 == 0) ? true : false);
+      isMega: (++bounty.number % 2 == 0) ? true : false);
 
   nextTick() {
     if (!snake.moving) return;
     bounty.tick++;
     if (snake.addHead() == bounty.location) {
-      print('ate bounty');
+      // print('ate bounty');
       score.value += (bounty.isMega ? config.fieldArea ~/ bounty.tick + 1 : 1) *
           config.speed;
-      print('id:${bounty.number}, mega: ${bounty.isMega}');
+      // print('id:${bounty.number}, mega: ${bounty.isMega}');
       bounty = nextBounty();
     } else {
       // saveHighscore(score);

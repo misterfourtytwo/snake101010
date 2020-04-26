@@ -27,7 +27,7 @@ class GameBar extends StatelessWidget {
               'SCORE: ${score}',
               style: TextStyle(
                 color: Colors.white54,
-                fontSize: barHeight,
+                fontSize: barHeight * .6,
               ),
             ),
           ),
@@ -38,7 +38,7 @@ class GameBar extends StatelessWidget {
           //       return
           //       ///
           IconButton(
-              iconSize: barHeight,
+              iconSize: barHeight * .6,
               splashColor: Colors.transparent,
               icon: Icon(
                 state.snake.moving ? Icons.pause : Icons.play_arrow,

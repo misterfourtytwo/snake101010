@@ -44,7 +44,7 @@ class Snake {
       default:
         newHead.x = (config.fieldWidth + newHead.x - 1) % config.fieldWidth;
     }
-    if (contains(newHead)) {
+    if (contains(newHead) && newHead != body.last) {
       dead = true;
       moving = false;
     } else {

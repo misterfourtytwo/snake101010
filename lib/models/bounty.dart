@@ -11,6 +11,6 @@ class Bounty {
     this.location, {
     this.number = 0,
     this.isMega = false,
-    this.tick = 0,
+    this.tick = 1,
   });
 }

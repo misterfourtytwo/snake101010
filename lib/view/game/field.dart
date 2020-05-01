@@ -35,7 +35,7 @@ class _GameFieldState extends State<GameField> {
     snakePainter = SnakePainter();
 
     timer = new Timer.periodic(
-      Duration(milliseconds: 1000 ~/ config.speed),
+      Duration(milliseconds: 1000 ~/ config.fps),
       (Timer t) => setState(state.nextTick),
       // snakePainter.tick(snake, bounty, timer.tick);
     );

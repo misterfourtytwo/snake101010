@@ -3,7 +3,7 @@ import 'package:get_it/get_it.dart';
 
 import 'package:snake101010/providers/config.dart';
 import 'package:snake101010/providers/game_state.dart';
-import 'package:snake101010/utils/swipe_detector_widget.dart';
+import 'package:snake101010/utils/controls_widget.dart';
 import 'package:snake101010/view/game/bar.dart';
 import 'package:snake101010/view/game/field.dart';
 import 'package:snake101010/view/game/go_overlay.dart';
@@ -14,20 +14,26 @@ class GameView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final config = GetIt.I<Config>();
+    final state = GetIt.I<GameState>();
+
     return Scaffold(
         // backgroundColor: config.bgColor,
         body: SafeArea(
       child: LayoutBuilder(
         builder: (context, size) {
           config.size = size.biggest;
-          // print('rebuild layout');
-          return Stack(children: [
-            SwipeDetectorWidget(child: GameField()),
-            GameBar(),
-            // if (config.drawControls) GameControls(),
-            if (GetIt.I<GameState>().snake.dead)
-              GoOverlay(),
-          ]);
+
+          return ControlsWidget(
+            child: Stack(children: [
+              GameField(),
+              GameBar(),
+              // if (config.drawControls) GameControls(),
+              if (state.snake.dead)
+                GoOverlay()
+              // else if (state.snake.moving)
+              //   PauseOverlay()
+            ]),
+          );
         },
       ),
     ));

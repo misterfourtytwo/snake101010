@@ -25,16 +25,14 @@ class SnakePainter extends CustomPainter {
     outlinePaint = Paint()
       ..color = Colors.blueGrey[900]
       ..style = PaintingStyle.stroke
-      ..strokeWidth = config.cellSide * .2;
+      ..strokeWidth = 4;
+    // config.cellSide * .2;
   }
 
   drawBounty(Canvas canvas) {
     // shadows
     canvas.drawCircle(
-      Offset(
-                state.bounty.location.x + .45,
-                state.bounty.location.y + .55,
-              ) *
+      Offset(state.bounty.location.x + .45, state.bounty.location.y + .55) *
               config.cellSide +
           config.padding,
       config.cellSide *
@@ -46,10 +44,7 @@ class SnakePainter extends CustomPainter {
     );
     // outline
     canvas.drawCircle(
-      Offset(
-                state.bounty.location.x + .5,
-                state.bounty.location.y + .5,
-              ) *
+      Offset(state.bounty.location.x + .5, state.bounty.location.y + .5) *
               config.cellSide +
           config.padding,
       config.cellSide *
@@ -61,10 +56,7 @@ class SnakePainter extends CustomPainter {
     );
     // body
     canvas.drawCircle(
-      Offset(
-                state.bounty.location.x + .5,
-                state.bounty.location.y + .5,
-              ) *
+      Offset(state.bounty.location.x + .5, state.bounty.location.y + .5) *
               config.cellSide +
           config.padding,
       config.cellSide *
@@ -76,10 +68,7 @@ class SnakePainter extends CustomPainter {
     );
     // highlight
     canvas.drawCircle(
-      Offset(
-                state.bounty.location.x + .58,
-                state.bounty.location.y + .40,
-              ) *
+      Offset(state.bounty.location.x + .58, state.bounty.location.y + .40) *
               config.cellSide +
           config.padding,
       config.cellSide *
@@ -94,36 +83,21 @@ class SnakePainter extends CustomPainter {
   drawSnake(Canvas canvas) {
     // shadows
     state.snake.body.forEach((e) => canvas.drawCircle(
-          Offset(
-                    e.x + .4,
-                    e.y + .7 - e.odd * .14,
-                  ) *
-                  config.cellSide +
-              config.padding,
+          Offset(e.x + .4, e.y + .7) * config.cellSide + config.padding,
           config.cellSide * .65,
           shadowsPaint,
         ));
 
     // outline
     state.snake.body.forEach((e) => canvas.drawCircle(
-          Offset(
-                    e.x + .5,
-                    e.y + .5 - e.odd * .14,
-                  ) *
-                  config.cellSide +
-              config.padding,
+          Offset(e.x + .5, e.y + .5) * config.cellSide + config.padding,
           config.cellSide * .65,
           outlinePaint,
         ));
 
     //body
     state.snake.body.forEach((e) => canvas.drawCircle(
-          Offset(
-                    e.x + .5,
-                    e.y + .5 - e.odd * .14,
-                  ) *
-                  config.cellSide +
-              config.padding,
+          Offset(e.x + .5, e.y + .5) * config.cellSide + config.padding,
           config.cellSide * .65,
           snakeBodyPaint,
         ));
@@ -131,10 +105,7 @@ class SnakePainter extends CustomPainter {
     // head
     canvas.drawArc(
       Rect.fromCircle(
-          center: Offset(
-                    state.snake.head.x + .5,
-                    state.snake.head.y + .5 - state.snake.head.odd * .14,
-                  ) *
+          center: Offset(state.snake.head.x + .5, state.snake.head.y + .5) *
                   config.cellSide +
               config.padding,
           radius: config.cellSide * .55),
@@ -150,13 +121,10 @@ class SnakePainter extends CustomPainter {
 
     //highlights
     state.snake.body.forEach((e) => canvas.drawCircle(
-          Offset(
-                    e.x + .7,
-                    e.y + .3 - e.odd * .14,
-                  ) *
+          Offset(e.x + .7 - e.odd * .1, e.y + .3 - e.odd * .14) *
                   config.cellSide +
               config.padding,
-          config.cellSide * .13,
+          config.cellSide * (-e.odd * .04 + .18),
           highlightsPaint,
         ));
 
@@ -164,7 +132,7 @@ class SnakePainter extends CustomPainter {
     state.snake.body.forEach((e) => canvas.drawCircle(
           Offset(
                     e.x + .37,
-                    e.y + .7 - e.odd * .14,
+                    e.y + .7,
                   ) *
                   config.cellSide +
               config.padding,
@@ -176,7 +144,7 @@ class SnakePainter extends CustomPainter {
       canvas.drawCircle(
         Offset(
                   state.snake.head.x + .5,
-                  state.snake.head.y + .5 - state.snake.head.odd * .14,
+                  state.snake.head.y + .5,
                 ) *
                 config.cellSide +
             config.padding,

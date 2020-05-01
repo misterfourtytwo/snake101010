@@ -9,7 +9,7 @@ void main() {
   // _initDb();
   _initServices();
 
-  runApp(Game());
+  runApp(Main());
 }
 
 _initServices() {
@@ -18,8 +18,8 @@ _initServices() {
   _sl.registerSingleton<GameState>(GameState());
 }
 
-class Game extends StatelessWidget {
-  const Game({Key key}) : super(key: key);
+class Main extends StatelessWidget {
+  const Main({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -3,8 +3,13 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class Config {
+  // ticks<>frames per second
+  final int fps = 25;
+
   // moves per second
   int speed;
+  // bounty frequency e.g. every 8th bounty is mega
+  final int bountyFrequency = 8;
 
   int fieldWidth;
   int fieldHeight;
@@ -48,14 +53,9 @@ class Config {
   Offset get padding => _padding ?? Offset(leftPadding, topPadding);
 
   Config({
-    this.speed = 10,
+    this.speed = 4,
     this.fieldHeight = 10,
     this.fieldWidth = 10,
     this.drawControls = false,
   });
 }
-
-// cellSize = min(size.width * .92 / Config.fieldWidth,
-//     (size.height - 42) * .92 / Config.fieldHeight);
-// hPad = (size.width - cellSize * Config.fieldWidth) * .5;
-// vPad = (size.height - 42 - cellSize * Config.fieldHeight) * .5 + 42;

@@ -32,6 +32,9 @@ class Main extends StatelessWidget {
       title: "Snake",
       theme: ThemeData(
         fontFamily: 'VT323',
+        textTheme: TextTheme(
+            headline1: TextStyle(color: Colors.white),
+            headline2: TextStyle(color: Colors.white)),
       ),
       initialRoute: '/menu',
       routes: {

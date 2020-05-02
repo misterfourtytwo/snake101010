@@ -28,32 +28,29 @@ class ScoreboardView extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             FittedBox(
-              child: Text('Scoreboard',
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline1
-                      .copyWith(color: Colors.white)),
+              child: Text(
+                'Scoreboard',
+                style: Theme.of(context).textTheme.headline1,
+              ),
             ),
             Expanded(
+              flex: 3,
               child: FittedBox(
                 child: RichText(
                   maxLines: scores.length,
                   text: TextSpan(
-                      children: lines,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 64,
-                          fontFamily: 'VT323')),
+                    children: lines,
+                    style: Theme.of(context).textTheme.headline2,
+                  ),
                 ),
               ),
             ),
             FlatButton(
-                child: Text(
-                  'Back',
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline1
-                      .copyWith(color: Colors.white),
+                child: FittedBox(
+                  child: Text(
+                    '   Back   ',
+                    style: Theme.of(context).textTheme.headline1,
+                  ),
                 ),
                 onPressed: () {
                   Navigator.of(context).pop();

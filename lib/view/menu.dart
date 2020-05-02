@@ -15,33 +15,54 @@ class MenuView extends StatelessWidget {
           child: Column(
             children: [
               if (GetIt.I<GameState>().score.value != 0)
-                FlatButton(
-                  child: Text(
-                    'Resume',
-                    style: TextStyle(color: Colors.white, fontSize: 64),
+                Expanded(
+                  child: FlatButton(
+                    child: FittedBox(
+                      child: Text(
+                        ' Continue ',
+                        maxLines: 1,
+                        style: Theme.of(context).textTheme.headline1,
+                      ),
+                    ),
+                    onPressed: () => Navigator.of(context).pushNamed('/game'),
+                  ),
+                ),
+              Expanded(
+                child: FlatButton(
+                  child: FittedBox(
+                    child: Text(
+                      ' New Game ',
+                      maxLines: 1,
+                      style: Theme.of(context).textTheme.headline1,
+                    ),
                   ),
                   onPressed: () => Navigator.of(context).pushNamed('/game'),
                 ),
-              FlatButton(
-                child: Text(
-                  'New Game',
-                  style: TextStyle(color: Colors.white, fontSize: 64),
-                ),
-                onPressed: () => Navigator.of(context).pushNamed('/game'),
               ),
-              FlatButton(
-                child: Text(
-                  'Scoreboard',
-                  style: TextStyle(color: Colors.white, fontSize: 64),
+              Expanded(
+                child: FlatButton(
+                  child: FittedBox(
+                    child: Text(
+                      'Scoreboard',
+                      maxLines: 1,
+                      style: Theme.of(context).textTheme.headline1,
+                    ),
+                  ),
+                  onPressed: () =>
+                      Navigator.of(context).pushNamed('/scoreboard'),
                 ),
-                onPressed: () => Navigator.of(context).pushNamed('/scoreboard'),
               ),
-              FlatButton(
-                child: Text(
-                  'Settings',
-                  style: TextStyle(color: Colors.white, fontSize: 64),
+              Expanded(
+                child: FlatButton(
+                  child: FittedBox(
+                    child: Text(
+                      ' Settings ',
+                      maxLines: 1,
+                      style: Theme.of(context).textTheme.headline1,
+                    ),
+                  ),
+                  onPressed: () => Navigator.of(context).pushNamed('/settings'),
                 ),
-                onPressed: () => Navigator.of(context).pushNamed('/settings'),
               ),
             ],
             mainAxisSize: MainAxisSize.min,

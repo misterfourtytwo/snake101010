@@ -20,22 +20,17 @@ class GoOverlay extends StatelessWidget {
     return Container(
       color: Colors.black54,
       alignment: Alignment.center,
+      padding: EdgeInsets.all(16),
       child: FittedBox(
         child: RichText(
           textAlign: TextAlign.center,
-          text: TextSpan(
-            children: [
-              TextSpan(text: 'You died\n'),
-              TextSpan(text: 'Restart?\n'),
-              TextSpan(text: ' Y ', recognizer: recognizeYes),
-              TextSpan(text: '/'),
-              TextSpan(text: ' N ', recognizer: recognizeNo),
-            ],
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 64,
-            ),
-          ),
+          text: TextSpan(children: [
+            TextSpan(text: 'You died\n'),
+            TextSpan(text: 'Restart?\n'),
+            TextSpan(text: ' Y ', recognizer: recognizeYes),
+            TextSpan(text: '/'),
+            TextSpan(text: ' N ', recognizer: recognizeNo),
+          ], style: Theme.of(context).textTheme.headline1),
           maxLines: 3,
           softWrap: true,
         ),

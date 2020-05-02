@@ -20,7 +20,6 @@ class Snake {
         [
           MyPoint(config.fieldWidth ~/ 2, config.fieldHeight ~/ 2),
           MyPoint(config.fieldWidth ~/ 2, config.fieldHeight ~/ 2 + 1),
-          // MyPoint(config.fieldWidth ~/ 2 + 1, config.fieldHeight ~/ 2 + 1)
         ];
   }
   MyPoint get head => body.first;

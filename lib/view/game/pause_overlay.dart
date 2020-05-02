@@ -12,61 +12,68 @@ class PauseOverlay extends StatelessWidget {
       color: Colors.black54,
       alignment: Alignment.center,
       child: Column(
-        mainAxisSize: MainAxisSize.min,
         children: [
-          FlatButton(
-            child: Text(
-              'Resume',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 64,
+          Expanded(
+            child: FlatButton(
+              child: FittedBox(
+                child: Text(
+                  ' Continue ',
+                  style: Theme.of(context).textTheme.headline1,
+                ),
               ),
+              onPressed: () =>
+                  GetIt.I<GameState>().setAction(ControlActions.TogglePause),
             ),
-            onPressed: () =>
-                GetIt.I<GameState>().setAction(ControlActions.TogglePause),
           ),
-          FlatButton(
-            child: Text(
-              'Restart',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 64,
+          Expanded(
+            child: FlatButton(
+              child: FittedBox(
+                child: Text(
+                  '  Restart ',
+                  style: Theme.of(context).textTheme.headline1,
+                ),
               ),
+              onPressed: () =>
+                  GetIt.I<GameState>().setAction(ControlActions.Restart),
             ),
-            onPressed: () =>
-                GetIt.I<GameState>().setAction(ControlActions.Restart),
           ),
-          FlatButton(
-              child: Text(
-                'Scoreboard',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 64,
+          Expanded(
+            child: FlatButton(
+                child: FittedBox(
+                  child: Text(
+                    'Scoreboard',
+                    style: Theme.of(context).textTheme.headline1,
+                  ),
                 ),
-              ),
-              onPressed: () => Navigator.of(context).pushNamed('/scoreboard')),
-          FlatButton(
-              child: Text(
-                'Settings',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 64,
+                onPressed: () =>
+                    Navigator.of(context).pushNamed('/scoreboard')),
+          ),
+          Expanded(
+            child: FlatButton(
+                child: FittedBox(
+                  child: Text(
+                    ' Settings ',
+                    style: Theme.of(context).textTheme.headline1,
+                  ),
                 ),
-              ),
-              onPressed: () => Navigator.of(context).pushNamed('/settings')),
-          FlatButton(
-              child: Text(
-                'Menu',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 64,
+                onPressed: () => Navigator.of(context).pushNamed('/settings')),
+          ),
+          Expanded(
+            child: FlatButton(
+                child: FittedBox(
+                  child: Text(
+                    '   Menu   ',
+                    style: Theme.of(context).textTheme.headline1,
+                  ),
                 ),
-              ),
-              onPressed: () {
-                GetIt.I<GameState>().setAction(ControlActions.LeaveField);
-                Navigator.of(context).pop();
-              }),
+                onPressed: () {
+                  GetIt.I<GameState>().setAction(ControlActions.LeaveField);
+                  Navigator.of(context).pop();
+                }),
+          ),
         ],
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
       ),
     );
   }

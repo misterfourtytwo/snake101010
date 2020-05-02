@@ -5,7 +5,7 @@ class Score {
   /// 12 char max
   String playerName;
   int value;
-  Score({@required this.value, this.playerName = '___'});
+  Score({@required this.value, this.playerName});
   @override
   String toString() {
     return '$playerName: $value';
@@ -30,7 +30,7 @@ class ScoreBoard {
   List<Score> getScores({Score current}) {
     var x = _scores.toList();
     if (current != null && current.value != 0) {
-      current.playerName = 'current';
+      current.playerName ??= 'Current';
       x.add(current);
     }
     x.sort(

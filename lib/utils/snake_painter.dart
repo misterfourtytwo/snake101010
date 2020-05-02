@@ -163,6 +163,6 @@ class SnakePainter extends CustomPainter {
   }
 
   bool shouldRepaint(CustomPainter oldDelegate) {
-    return !state.snake.dead && state.snake.moving;
+    return !(state.paused && state.snake.dead);
   }
 }

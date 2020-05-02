@@ -32,7 +32,7 @@ class _ControlsWidgetState extends State<ControlsWidget> {
   }
 
   void _handleKeyEvent(RawKeyEvent event) {
-    print(event.physicalKey);
+    // print(event.physicalKey);
     var newDirection;
 
     if (event.physicalKey == PhysicalKeyboardKey.arrowUp) {
@@ -47,14 +47,22 @@ class _ControlsWidgetState extends State<ControlsWidget> {
     if (newDirection != null)
       _redirect(newDirection);
     else {
+      // pause toggle
       if (event.physicalKey == PhysicalKeyboardKey.space) {
-        state.snake.moving ^= true;
-      } else if (state.snake.dead) {
+        state.setAction(ControlActions.TogglePause);
+      }
+      // leave game screen
+      else if (event.physicalKey == PhysicalKeyboardKey.escape) {
+        state.setAction(ControlActions.LeaveField);
+        Navigator.of(context).pop();
+      }
+      // check answer to game over message
+      else if (state.snake.dead) {
         if (event.physicalKey == PhysicalKeyboardKey.keyY ||
             event.physicalKey == PhysicalKeyboardKey.enter) {
-          state.reset();
-        } else if (event.physicalKey == PhysicalKeyboardKey.keyN ||
-            event.physicalKey == PhysicalKeyboardKey.escape) {
+          state.setAction(ControlActions.Restart);
+        } else if (event.physicalKey == PhysicalKeyboardKey.keyN) {
+          state.setAction(ControlActions.EndGame);
           Navigator.of(context).pop();
         }
       }
@@ -62,9 +70,7 @@ class _ControlsWidgetState extends State<ControlsWidget> {
   }
 
   void _redirect(Direction direction) {
-    if (state.snake.moving &&
-        Direction.values[(state.snake.direction.index + 2) % 4] != direction)
-      state.snake.direction = direction;
+    state.setAction(ControlActions.values[direction.index]);
   }
 
   @override

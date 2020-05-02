@@ -47,7 +47,7 @@
 2.[GameState]
 * main logic behind the game
 * snake with its position, direction, moving
-* (apple) bounty population, position
+* (apple) bounty creation, position
 * current game score
 * (TBD) load last game on open
 

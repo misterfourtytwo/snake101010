@@ -18,6 +18,7 @@ class BgPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     // TODO ???? maybe drawColor is better
+    // print('draw bg');
     canvas.drawPaint(Paint()..color = config.bgColor);
     for (var i = 0; i < config.fieldWidth; i++)
       for (var j = 0; j < config.fieldHeight; j++)
@@ -35,11 +36,11 @@ class BgPainter extends CustomPainter {
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
     if (config.shouldRepaint) {
-      // TODO ????? check whether needed
-      bgPaint.color = config.bgDotColor;
+      // print('redraw bg');
       config.shouldRepaint = false;
       return true;
+    } else {
+      return false;
     }
-    return false;
   }
 }

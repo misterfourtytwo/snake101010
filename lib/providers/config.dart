@@ -4,20 +4,29 @@ import 'package:flutter/material.dart';
 
 class Config {
   // ticks<>frames per second
-  final int fps = 25;
+  static const fps = 60;
 
-  // moves per second
-  int speed;
   // bounty frequency e.g. every 8th bounty is mega
-  final int bountyFrequency = 8;
+  static const bountyFrequency = 8;
+  static const scoreboardLength = 10;
+
+  // game colors
+  final Color bgDotColor = Colors.blueGrey[700];
+  final Color bgColor = Colors.grey[800];
 
   int fieldWidth;
   int fieldHeight;
   int get fieldArea => fieldWidth * fieldHeight;
 
-  // game colors
-  Color bgDotColor = Colors.blueGrey[700];
-  Color bgColor = Colors.grey[800];
+  // moves per second
+  final int speed;
+
+  Config({
+    this.speed = 12,
+    this.fieldHeight = 16,
+    this.fieldWidth = 21,
+    this.drawControls = false,
+  });
 
   // game view settings
   bool drawControls;
@@ -30,10 +39,7 @@ class Config {
   double _vPad;
   Offset _padding;
 
-  Size get size {
-    return _size;
-  }
-
+  Size get size => _size;
   set size(Size newValue) {
     shouldRepaint = true;
     _barHeight = _cellSide = _hPad = _vPad = _padding = null;
@@ -51,11 +57,4 @@ class Config {
       _vPad ??
       (_vPad = (size.height - cellSide * this.fieldHeight + _barHeight) * .5);
   Offset get padding => _padding ?? Offset(leftPadding, topPadding);
-
-  Config({
-    this.speed = 4,
-    this.fieldHeight = 10,
-    this.fieldWidth = 10,
-    this.drawControls = false,
-  });
 }

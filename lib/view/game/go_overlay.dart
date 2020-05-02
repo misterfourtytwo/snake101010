@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:snake101010/providers/game_state.dart';
@@ -7,53 +8,38 @@ class GoOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(
-          'You died.',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 48,
+    final recognizeYes = TapGestureRecognizer();
+    recognizeYes.onTapUp =
+        (_) => GetIt.I<GameState>().setAction(ControlActions.Restart);
+    final recognizeNo = TapGestureRecognizer();
+    recognizeNo.onTapUp = (_) {
+      GetIt.I<GameState>().setAction(ControlActions.EndGame);
+      Navigator.of(context).pop();
+    };
+
+    return Container(
+      color: Colors.black54,
+      alignment: Alignment.center,
+      child: FittedBox(
+        child: RichText(
+          textAlign: TextAlign.center,
+          text: TextSpan(
+            children: [
+              TextSpan(text: 'You died\n'),
+              TextSpan(text: 'Restart?\n'),
+              TextSpan(text: ' Y ', recognizer: recognizeYes),
+              TextSpan(text: '/'),
+              TextSpan(text: ' N ', recognizer: recognizeNo),
+            ],
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 64,
+            ),
           ),
+          maxLines: 3,
+          softWrap: true,
         ),
-        Text(
-          'Restart?',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 48,
-          ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            FlatButton(
-              child: Text('Y',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 64,
-                  )),
-              onPressed: GetIt.I<GameState>().reset,
-            ),
-            Text(
-              '/',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 64,
-              ),
-            ),
-            FlatButton(
-              child: Text('N',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 64,
-                  )),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-          ],
-        )
-      ],
+      ),
     );
   }
 }

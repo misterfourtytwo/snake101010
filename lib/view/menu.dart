@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:snake101010/view/game/view.dart';
-import 'package:snake101010/view/scores.dart';
-import 'package:snake101010/view/settings.dart';
+import 'package:get_it/get_it.dart';
+import 'package:snake101010/providers/game_state.dart';
 
 class MenuView extends StatelessWidget {
   const MenuView({Key key}) : super(key: key);
@@ -15,35 +14,38 @@ class MenuView extends StatelessWidget {
           alignment: Alignment.center,
           child: Column(
             children: [
+              if (GetIt.I<GameState>().score.value != 0)
+                FlatButton(
+                  child: Text(
+                    'Resume',
+                    style: TextStyle(color: Colors.white, fontSize: 64),
+                  ),
+                  onPressed: () => Navigator.of(context).pushNamed('/game'),
+                ),
               FlatButton(
                 child: Text(
-                  'PLAY',
-                  style: TextStyle(color: Colors.white, fontSize: 48),
+                  'New Game',
+                  style: TextStyle(color: Colors.white, fontSize: 64),
                 ),
-                onPressed: () => Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => GameView())),
+                onPressed: () => Navigator.of(context).pushNamed('/game'),
               ),
               FlatButton(
                 child: Text(
                   'Scoreboard',
-                  style: TextStyle(color: Colors.white, fontSize: 48),
+                  style: TextStyle(color: Colors.white, fontSize: 64),
                 ),
-                onPressed: () => Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => ScoresView()),
-                ),
+                onPressed: () => Navigator.of(context).pushNamed('/scoreboard'),
               ),
               FlatButton(
                 child: Text(
                   'Settings',
-                  style: TextStyle(color: Colors.white, fontSize: 48),
+                  style: TextStyle(color: Colors.white, fontSize: 64),
                 ),
-                onPressed: () => Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => SettingsView()),
-                ),
+                onPressed: () => Navigator.of(context).pushNamed('/settings'),
               ),
             ],
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
           ),
         ),
       ),

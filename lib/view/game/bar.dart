@@ -31,22 +31,16 @@ class GameBar extends StatelessWidget {
               ),
             ),
           ),
-          // TODO
-          // ValueListenableBuilder<bool>(
-          //     valueListenable: state.snake.moving,
-          //     builder: (context, moving, _) {
-          //       return
-          //       ///
-          IconButton(
+          if (!state.paused)
+            IconButton(
               iconSize: barHeight * .6,
               splashColor: Colors.transparent,
               icon: Icon(
-                state.snake.moving ? Icons.pause : Icons.play_arrow,
+                Icons.pause,
                 color: Colors.white54,
               ),
-              onPressed: () {
-                if (!state.snake.dead) state.snake.moving ^= true;
-              })
+              onPressed: () => state.setAction(ControlActions.TogglePause),
+            )
           // ;
           // }),
         ],

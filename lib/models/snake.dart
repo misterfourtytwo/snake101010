@@ -20,37 +20,40 @@ class Snake {
         [
           MyPoint(config.fieldWidth ~/ 2, config.fieldHeight ~/ 2),
           MyPoint(config.fieldWidth ~/ 2, config.fieldHeight ~/ 2 + 1),
-          MyPoint(config.fieldWidth ~/ 2 + 1, config.fieldHeight ~/ 2 + 1)
+          // MyPoint(config.fieldWidth ~/ 2 + 1, config.fieldHeight ~/ 2 + 1)
         ];
   }
   MyPoint get head => body.first;
   int get length => body.length;
 
   bool contains(MyPoint point) => body.contains(point);
-
-  MyPoint addHead() {
-    MyPoint newHead = MyPoint(head.x, head.y);
+  MyPoint nextHead() {
+    MyPoint nextHead = MyPoint(head.x, head.y);
     switch (direction) {
       case Direction.up:
-        newHead.y = (config.fieldHeight + newHead.y - 1) % config.fieldHeight;
+        nextHead.y = (config.fieldHeight + nextHead.y - 1) % config.fieldHeight;
         break;
       case Direction.right:
-        newHead.x = (config.fieldWidth + newHead.x + 1) % config.fieldWidth;
+        nextHead.x = (config.fieldWidth + nextHead.x + 1) % config.fieldWidth;
         break;
       case Direction.down:
-        newHead.y = (config.fieldHeight + newHead.y + 1) % config.fieldHeight;
+        nextHead.y = (config.fieldHeight + nextHead.y + 1) % config.fieldHeight;
         break;
       case Direction.left:
       default:
-        newHead.x = (config.fieldWidth + newHead.x - 1) % config.fieldWidth;
+        nextHead.x = (config.fieldWidth + nextHead.x - 1) % config.fieldWidth;
     }
-    if (contains(newHead) && newHead != body.last) {
+    return nextHead;
+  }
+
+  bool addHead(MyPoint nextHead) {
+    if (contains(nextHead)) {
       dead = true;
-      moving = false;
+      return false;
     } else {
-      body.insert(0, newHead);
+      body.insert(0, nextHead);
+      return true;
     }
-    return head;
   }
 
   void dropTail() {

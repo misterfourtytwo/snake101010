@@ -3,8 +3,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:snake101010/models/scoreboard.dart';
 import 'package:snake101010/providers/game_state.dart';
+import 'package:snake101010/providers/scoreboard.dart';
 
 class ScoreboardView extends StatelessWidget {
   const ScoreboardView({Key key}) : super(key: key);

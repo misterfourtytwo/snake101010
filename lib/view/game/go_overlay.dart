@@ -14,7 +14,7 @@ class GoOverlay extends StatelessWidget {
     final recognizeNo = TapGestureRecognizer();
     recognizeNo.onTapUp = (_) {
       GetIt.I<GameState>().setAction(ControlActions.EndGame);
-      Navigator.of(context).pop();
+      Navigator.of(context).pushReplacementNamed('/menu');
     };
 
     return Container(

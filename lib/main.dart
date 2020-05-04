@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-import 'package:snake101010/models/scoreboard.dart';
 import 'package:snake101010/providers/config.dart';
 import 'package:snake101010/providers/game_state.dart';
+import 'package:snake101010/providers/scoreboard.dart';
 import 'package:snake101010/view/game/view.dart';
 import 'package:snake101010/view/menu.dart';
 import 'package:snake101010/view/scoreboard.dart';
@@ -15,8 +15,8 @@ void main() {
   runApp(Main());
 }
 
+final _sl = GetIt.instance;
 _initServices() {
-  final _sl = GetIt.instance;
   _sl.registerSingleton<Config>(Config());
   _sl.registerSingleton<GameState>(GameState());
   _sl.registerSingleton<ScoreBoard>(ScoreBoard());
@@ -28,10 +28,12 @@ class Main extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // showPerformanceOverlay: true,
+      showPerformanceOverlay: true,
       title: "Snake",
       theme: ThemeData(
         fontFamily: 'VT323',
+        // iconTheme: IconThemeData(color: Colors.white, size: 64),
+
         textTheme: TextTheme(
             headline1: TextStyle(color: Colors.white),
             headline2: TextStyle(color: Colors.white)),
@@ -39,7 +41,12 @@ class Main extends StatelessWidget {
       initialRoute: '/menu',
       routes: {
         '/menu': (context) => MenuView(),
-        '/game': (context) => GameView(),
+        '/game': (context) {
+          if (ModalRoute.of(context).settings.arguments != null &&
+              ModalRoute.of(context).settings.arguments as bool)
+            _sl<GameState>().reset();
+          return GameView();
+        },
         '/scoreboard': (context) => ScoreboardView(),
         '/settings': (context) => SettingsView(),
       },

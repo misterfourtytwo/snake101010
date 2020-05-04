@@ -68,7 +68,7 @@ class PauseOverlay extends StatelessWidget {
                 ),
                 onPressed: () {
                   GetIt.I<GameState>().setAction(ControlActions.LeaveField);
-                  Navigator.of(context).pop();
+                  Navigator.of(context).pushReplacementNamed('/menu');
                 }),
           ),
         ],

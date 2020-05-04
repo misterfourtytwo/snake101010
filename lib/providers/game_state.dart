@@ -5,9 +5,9 @@ import 'package:get_it/get_it.dart';
 
 import 'package:snake101010/models/bounty.dart';
 import 'package:snake101010/models/my_point.dart';
-import 'package:snake101010/models/scoreboard.dart';
 import 'package:snake101010/models/snake.dart';
 import 'package:snake101010/providers/config.dart';
+import 'package:snake101010/providers/scoreboard.dart';
 
 enum ControlActions {
   MoveUp,
@@ -34,6 +34,7 @@ class GameState {
   Snake snake;
   Bounty bounty;
   ValueNotifier<int> score;
+  bool awaitingStart;
   bool paused;
   ControlActions lastAction;
   DateTime _lastPauseToggle;
@@ -51,6 +52,7 @@ class GameState {
     snake = Snake();
     bounty = Bounty(emptySpot());
     score.value = 0;
+    awaitingStart = true;
     paused = true;
     lastAction = null;
     _tickLock = false;
@@ -85,6 +87,7 @@ class GameState {
 
   void setAction(ControlActions action) {
     print('Set action $action');
+
     switch (action) {
       case (ControlActions.LeaveField):
         //TODO add some handlers???
@@ -99,17 +102,24 @@ class GameState {
 
       case (ControlActions.TogglePause):
         if (DateTime.now().difference(_lastPauseToggle).inMilliseconds > 500) {
-          print('togglePause');
+          // print('togglePause');
           lastAction = ControlActions.TogglePause;
           _lastPauseToggle = DateTime.now();
         }
         break;
       default:
-        if (!(paused ||
-            snake.dead ||
-            Direction.values[(action.index + 2) % 4] == snake.direction))
+        // !paused && !snake.dead && direction isnt opposite of current
+        // awaitingStart && !snake.dead && direction isnt opposite of current
+        if ((awaitingStart || !paused) &&
+            !(snake.dead ||
+                Direction.values[(action.index + 2) % 4] == snake.direction))
           lastAction = action;
     }
+  }
+
+  start() {
+    awaitingStart = false;
+    paused = false;
   }
 
   bool _tickLock;
@@ -136,25 +146,38 @@ class GameState {
 
     if (paused) {
       if (lastAction == null) {
+        _tickLock = false;
+        return;
       } else if (lastAction == ControlActions.TogglePause) {
-        paused = false;
+        // paused = false;
+        start();
         lastAction = null;
         move();
       } else if (lastAction == ControlActions.LeaveField) {
+        awaitingStart = true;
         paused = true;
+      }
+      // last action aint one of those and we gotta tick so it should be arrow
+      else if (awaitingStart) {
+        start();
+        snake.direction = Direction.values[lastAction.index];
+        move();
       }
       lastAction = null;
       _tickLock = false;
       return;
     } else {
       // print('not paused');
-      print('last action: $lastAction');
+      // print('last action: $lastAction');
       if (lastAction != null) {
         if (lastAction.index < 4)
           snake.direction = Direction.values[lastAction.index];
         else if (lastAction == ControlActions.TogglePause)
           paused = true;
-        else if (lastAction == ControlActions.LeaveField) paused = true;
+        else if (lastAction == ControlActions.LeaveField) {
+          awaitingStart = true;
+          paused = true;
+        }
 
         lastAction = null;
       }

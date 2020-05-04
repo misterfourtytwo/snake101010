@@ -9,38 +9,58 @@ class GameBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final barHeight = GetIt.I<Config>().barHeight;
+    final config = GetIt.I<Config>();
+    final barHeight = config.barHeight;
+    final toppad = config.spareHeight * .025;
     final state = GetIt.I<GameState>();
 
     return Positioned(
-      top: 0,
+      top: toppad,
       left: 0,
       right: 0,
       height: barHeight,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.end,
+        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          ValueListenableBuilder<int>(
-            valueListenable: state.score,
-            builder: (context, score, _) => Text(
-              'SCORE: ${score}',
-              style: TextStyle(
-                color: Colors.white54,
-                fontSize: barHeight * .6,
+          SizedBox(width: config.leftPadding),
+          Expanded(
+            flex: 3,
+            child: FittedBox(
+              alignment: Alignment.centerLeft,
+              // fit: BoxFit.fitHeight,
+              child: ValueListenableBuilder<int>(
+                valueListenable: state.score,
+                builder: (context, score, _) => Text(
+                  'SCORE:\n${score}',
+                  maxLines: 2,
+                  // softWrap: true,
+                  style: Theme.of(context).textTheme.headline1,
+                ),
               ),
             ),
           ),
+          Spacer(
+            flex: state.paused ? 12 : 6,
+          ),
           if (!state.paused)
-            IconButton(
-              iconSize: barHeight * .6,
-              splashColor: Colors.transparent,
-              icon: Icon(
-                Icons.pause,
-                color: Colors.white54,
+            Expanded(
+              flex: 6,
+              child: FittedBox(
+                alignment: Alignment.centerRight,
+                child: IconButton(
+                  padding: EdgeInsets.zero,
+                  iconSize: 512,
+                  splashColor: Colors.transparent,
+                  icon: Icon(
+                    Icons.pause,
+                    color: Colors.white,
+                  ),
+                  onPressed: () => state.setAction(ControlActions.TogglePause),
+                ),
               ),
-              onPressed: () => state.setAction(ControlActions.TogglePause),
-            )
+            ),
+          SizedBox(width: config.leftPadding),
           // ;
           // }),
         ],

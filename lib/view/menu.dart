@@ -24,7 +24,8 @@ class MenuView extends StatelessWidget {
                         style: Theme.of(context).textTheme.headline1,
                       ),
                     ),
-                    onPressed: () => Navigator.of(context).pushNamed('/game'),
+                    onPressed: () => Navigator.of(context)
+                        .pushNamed('/game', arguments: false),
                   ),
                 ),
               Expanded(
@@ -36,7 +37,8 @@ class MenuView extends StatelessWidget {
                       style: Theme.of(context).textTheme.headline1,
                     ),
                   ),
-                  onPressed: () => Navigator.of(context).pushNamed('/game'),
+                  onPressed: () =>
+                      Navigator.of(context).pushNamed('/game', arguments: true),
                 ),
               ),
               Expanded(

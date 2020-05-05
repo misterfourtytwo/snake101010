@@ -55,6 +55,7 @@ class _ControlsWidgetState extends State<ControlsWidget> {
       else if (event.physicalKey == PhysicalKeyboardKey.escape) {
         state.setAction(ControlActions.LeaveField);
         Navigator.of(context).pop();
+        // .pushNamedAndRemoveUntil('/menu', (route) => route.isFirst);
       }
       // check answer to game over message
       else if (state.snake.dead) {
@@ -64,6 +65,7 @@ class _ControlsWidgetState extends State<ControlsWidget> {
         } else if (event.physicalKey == PhysicalKeyboardKey.keyN) {
           state.setAction(ControlActions.EndGame);
           Navigator.of(context).pop();
+          // .pushNamedAndRemoveUntil('/menu', (route) => route.isFirst);
         }
       }
     }

@@ -28,12 +28,10 @@ class Main extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      showPerformanceOverlay: true,
+      // showPerformanceOverlay: true,
       title: "Snake",
       theme: ThemeData(
         fontFamily: 'VT323',
-        // iconTheme: IconThemeData(color: Colors.white, size: 64),
-
         textTheme: TextTheme(
             headline1: TextStyle(color: Colors.white),
             headline2: TextStyle(color: Colors.white)),

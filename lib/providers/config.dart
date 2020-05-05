@@ -22,7 +22,7 @@ class Config {
   final int speed;
 
   Config({
-    this.speed = 30,
+    this.speed = 15,
     this.fieldHeight = 16,
     this.fieldWidth = 21,
     this.drawControls = true,
@@ -50,7 +50,7 @@ class Config {
   // size.height = barHeight + _controlsHeight + gameHeight
   double get barHeight => _barHeight ?? (_barHeight = size.height * 0.1);
   double get controlsHeight =>
-      _controlsHeight ?? (_controlsHeight = size.height * 0.1);
+      _controlsHeight ?? (_controlsHeight = size.height * 0.25);
   double get spareHeight => size.height - barHeight - controlsHeight;
   double get cellSide =>
       _cellSide ??

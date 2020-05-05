@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:snake101010/providers/game_state.dart';
+import 'package:snake101010/widgets/menu_button.dart';
 
 class MenuView extends StatelessWidget {
   const MenuView({Key key}) : super(key: key);
@@ -10,65 +11,31 @@ class MenuView extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black54,
       body: SafeArea(
-        child: Container(
-          alignment: Alignment.center,
+        child: Center(
           child: Column(
             children: [
-              if (GetIt.I<GameState>().score.value != 0)
-                Expanded(
-                  child: FlatButton(
-                    child: FittedBox(
-                      child: Text(
-                        ' Continue ',
-                        maxLines: 1,
-                        style: Theme.of(context).textTheme.headline1,
-                      ),
-                    ),
-                    onPressed: () => Navigator.of(context)
-                        .pushNamed('/game', arguments: false),
-                  ),
-                ),
-              Expanded(
-                child: FlatButton(
-                  child: FittedBox(
-                    child: Text(
-                      ' New Game ',
-                      maxLines: 1,
-                      style: Theme.of(context).textTheme.headline1,
-                    ),
-                  ),
-                  onPressed: () =>
-                      Navigator.of(context).pushNamed('/game', arguments: true),
+              Offstage(
+                offstage: GetIt.I<GameState>().score.value == 0,
+                child: MenuButtonWidget(
+                  text: ' Continue ',
+                  onPressed: () => Navigator.of(context)
+                      .pushNamed('/game', arguments: false),
                 ),
               ),
-              Expanded(
-                child: FlatButton(
-                  child: FittedBox(
-                    child: Text(
-                      'Scoreboard',
-                      maxLines: 1,
-                      style: Theme.of(context).textTheme.headline1,
-                    ),
-                  ),
-                  onPressed: () =>
-                      Navigator.of(context).pushNamed('/scoreboard'),
-                ),
+              MenuButtonWidget(
+                text: ' New Game ',
+                onPressed: () =>
+                    Navigator.of(context).pushNamed('/game', arguments: true),
               ),
-              Expanded(
-                child: FlatButton(
-                  child: FittedBox(
-                    child: Text(
-                      ' Settings ',
-                      maxLines: 1,
-                      style: Theme.of(context).textTheme.headline1,
-                    ),
-                  ),
-                  onPressed: () => Navigator.of(context).pushNamed('/settings'),
-                ),
+              MenuButtonWidget(
+                text: 'Scoreboard',
+                onPressed: () => Navigator.of(context).pushNamed('/scoreboard'),
+              ),
+              MenuButtonWidget(
+                text: ' Settings ',
+                onPressed: () => Navigator.of(context).pushNamed('/settings'),
               ),
             ],
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
           ),
         ),
       ),

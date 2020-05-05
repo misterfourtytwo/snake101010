@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -25,7 +24,7 @@ class ScoreboardView extends StatelessWidget {
         color: Colors.black87,
         alignment: Alignment.center,
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisSize: MainAxisSize.max,
           children: [
             FittedBox(
               child: Text(

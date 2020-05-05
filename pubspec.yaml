@@ -12,11 +12,12 @@ dependencies:
   flutter:
     sdk: flutter
 
+  uic: ^0.4.2
   # detect swipes
   simple_gesture_detector: ^0.1.4
   get_it: ^3.1.0
   tuple: ^1.0.3
-  # provider: ^4.0.2
+  provider: ^4.0.2
 
 dev_dependencies:
   flutter_test:

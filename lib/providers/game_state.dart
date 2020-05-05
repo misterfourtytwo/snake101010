@@ -31,13 +31,18 @@ class GameState {
 
   Config config = GetIt.I<Config>();
 
+  // data
   Snake snake;
   Bounty bounty;
   ValueNotifier<int> score;
+  String playerName = '';
+
+  // flow contol
   bool awaitingStart;
   bool paused;
   ControlActions lastAction;
   DateTime _lastPauseToggle;
+  bool saved;
 
   // int get score => score.value;
   setScore(int newValue) => score.value = newValue;
@@ -52,12 +57,14 @@ class GameState {
     snake = Snake();
     bounty = Bounty(emptySpot());
     score.value = 0;
+
     awaitingStart = true;
     paused = true;
     lastAction = null;
     _tickLock = false;
     _tick = 0;
     _lastTick = -1;
+    saved = false;
 
     _lastPauseToggle = DateTime.now();
   }
@@ -86,7 +93,7 @@ class GameState {
       );
 
   void setAction(ControlActions action) {
-    print('Set action $action');
+    // print('Set action $action');
 
     switch (action) {
       case (ControlActions.LeaveField):
@@ -96,7 +103,7 @@ class GameState {
       case (ControlActions.EndGame):
       case (ControlActions.Restart):
         GetIt.I<ScoreBoard>()
-            .pushScore(Score(value: score.value, playerName: 'PLAYER'));
+            .pushScore(Score(value: score.value, playerName: playerName));
         reset();
         break;
 

@@ -1,32 +1,51 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
-import 'package:snake101010/providers/game_state.dart';
+
+import 'package:snake101010/exports.dart';
 import 'package:snake101010/widgets/menu_button.dart';
 
-class MenuView extends StatelessWidget {
+class MenuView extends StatefulWidget {
   const MenuView({Key key}) : super(key: key);
+
+  @override
+  _MenuViewState createState() => _MenuViewState();
+}
+
+class _MenuViewState extends State<MenuView> {
+  bool showContinue;
+  @override
+  void initState() {
+    super.initState();
+    showContinue = sl<GameStateProvider>().saveEmpty;
+  }
+
+  update() {
+    setState(() {
+      showContinue = sl<GameStateProvider>().saveEmpty;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black54,
+      backgroundColor: Theme.of(context).backgroundColor,
       body: SafeArea(
         child: Center(
           child: Column(
             children: [
-              Offstage(
-                offstage: GetIt.I<GameState>().score.value == 0,
-                child: MenuButtonWidget(
-                  text: ' Continue ',
-                  onPressed: () => Navigator.of(context)
-                      .pushNamed('/game', arguments: false),
-                ),
-              ),
+              if (showContinue)
+                MenuButtonWidget(
+                    text: ' Continue ',
+                    onPressed: () {
+                      Navigator.of(context)
+                          .pushNamed('/game', arguments: false);
+                      update();
+                    }),
               MenuButtonWidget(
-                text: ' New Game ',
-                onPressed: () =>
-                    Navigator.of(context).pushNamed('/game', arguments: true),
-              ),
+                  text: ' New Game ',
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/game', arguments: true);
+                    update();
+                  }),
               MenuButtonWidget(
                 text: 'Scoreboard',
                 onPressed: () => Navigator.of(context).pushNamed('/scoreboard'),

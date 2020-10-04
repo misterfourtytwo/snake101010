@@ -12,16 +12,21 @@ dependencies:
   flutter:
     sdk: flutter
 
-  uic: ^0.4.2
+  # uic: ^0.4.2
+  universal_platform: ^0.1.3
+  # db
+  hive: ^1.3.0
+  hive_flutter: ^0.3.0+1
+
   # detect swipes
   simple_gesture_detector: ^0.1.4
+  # state management
   get_it: ^3.1.0
-  tuple: ^1.0.3
   provider: ^4.0.2
 
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
+# dev_dependencies:
+# flutter_test:
+#   sdk: flutter
 
 # The following section is specific to Flutter.
 flutter:

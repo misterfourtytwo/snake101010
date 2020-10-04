@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get_it/get_it.dart';
 import 'package:simple_gesture_detector/simple_gesture_detector.dart';
-import 'package:snake101010/models/snake.dart';
-
-import 'package:snake101010/providers/game_state.dart';
+import 'package:snake101010/exports.dart';
+import 'package:snake101010/models/game/actions.dart';
+import 'package:snake101010/providers/state_provider.dart';
 
 class ControlsWidget extends StatefulWidget {
   const ControlsWidget({this.child, Key key}) : super(key: key);
@@ -16,12 +15,12 @@ class ControlsWidget extends StatefulWidget {
 
 class _ControlsWidgetState extends State<ControlsWidget> {
   FocusNode _focusNode;
-  GameState state;
+  GameStateProvider stateProvider;
 
   @override
   void initState() {
     super.initState();
-    state = GetIt.I<GameState>();
+    stateProvider = sl<GameStateProvider>();
     _focusNode = FocusNode();
   }
 
@@ -32,47 +31,44 @@ class _ControlsWidgetState extends State<ControlsWidget> {
   }
 
   void _handleKeyEvent(RawKeyEvent event) {
-    // print(event.physicalKey);
-    var newDirection;
+    GameAction newDirection;
 
     if (event.physicalKey == PhysicalKeyboardKey.arrowUp) {
-      newDirection = Direction.up;
-    } else if (event.physicalKey == PhysicalKeyboardKey.arrowDown) {
-      newDirection = Direction.down;
-    } else if (event.physicalKey == PhysicalKeyboardKey.arrowLeft) {
-      newDirection = Direction.left;
+      newDirection = GameAction.MoveUp;
     } else if (event.physicalKey == PhysicalKeyboardKey.arrowRight) {
-      newDirection = Direction.right;
+      newDirection = GameAction.MoveRight;
+    } else if (event.physicalKey == PhysicalKeyboardKey.arrowDown) {
+      newDirection = GameAction.MoveDown;
+    } else if (event.physicalKey == PhysicalKeyboardKey.arrowLeft) {
+      newDirection = GameAction.MoveLeft;
     }
     if (newDirection != null)
       _redirect(newDirection);
     else {
       // pause toggle
       if (event.physicalKey == PhysicalKeyboardKey.space) {
-        state.setAction(ControlActions.TogglePause);
+        stateProvider.setAction(GameAction.TogglePause);
       }
       // leave game screen
       else if (event.physicalKey == PhysicalKeyboardKey.escape) {
-        state.setAction(ControlActions.LeaveField);
+        stateProvider.setAction(GameAction.LeaveField);
         Navigator.of(context).pop();
-        // .pushNamedAndRemoveUntil('/menu', (route) => route.isFirst);
       }
       // check answer to game over message
-      else if (state.snake.dead) {
+      else if (stateProvider.gameOver) {
         if (event.physicalKey == PhysicalKeyboardKey.keyY ||
             event.physicalKey == PhysicalKeyboardKey.enter) {
-          state.setAction(ControlActions.Restart);
+          stateProvider.setAction(GameAction.Restart);
         } else if (event.physicalKey == PhysicalKeyboardKey.keyN) {
-          state.setAction(ControlActions.EndGame);
+          stateProvider.setAction(GameAction.EndGame);
           Navigator.of(context).pop();
-          // .pushNamedAndRemoveUntil('/menu', (route) => route.isFirst);
         }
       }
     }
   }
 
-  void _redirect(Direction direction) {
-    state.setAction(ControlActions.values[direction.index]);
+  void _redirect(GameAction action) {
+    stateProvider.setAction(action);
   }
 
   @override
@@ -88,11 +84,14 @@ class _ControlsWidgetState extends State<ControlsWidget> {
           swipeDetectionBehavior: SwipeDetectionBehavior.continuous,
         ),
         onHorizontalSwipe: (SwipeDirection dir) {
-          _redirect(
-              dir == SwipeDirection.left ? Direction.left : Direction.right);
+          _redirect(dir == SwipeDirection.left
+              ? GameAction.MoveLeft
+              : GameAction.MoveRight);
         },
         onVerticalSwipe: (SwipeDirection dir) {
-          _redirect(dir == SwipeDirection.up ? Direction.up : Direction.down);
+          _redirect(dir == SwipeDirection.up
+              ? GameAction.MoveUp
+              : GameAction.MoveDown);
         },
         child: widget.child,
       ),

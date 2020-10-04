@@ -32,7 +32,7 @@ class SnakePainter extends CustomPainter {
   drawBounty(Canvas canvas) {
     // shadows
     canvas.drawCircle(
-      Offset(state.bounty.location.x + .45, state.bounty.location.y + .55) *
+      Offset(state.bounty.position.x + .45, state.bounty.position.y + .55) *
               config.cellSide +
           config.padding,
       config.cellSide *
@@ -44,7 +44,7 @@ class SnakePainter extends CustomPainter {
     );
     // outline
     canvas.drawCircle(
-      Offset(state.bounty.location.x + .5, state.bounty.location.y + .5) *
+      Offset(state.bounty.position.x + .5, state.bounty.position.y + .5) *
               config.cellSide +
           config.padding,
       config.cellSide *
@@ -56,7 +56,7 @@ class SnakePainter extends CustomPainter {
     );
     // body
     canvas.drawCircle(
-      Offset(state.bounty.location.x + .5, state.bounty.location.y + .5) *
+      Offset(state.bounty.position.x + .5, state.bounty.position.y + .5) *
               config.cellSide +
           config.padding,
       config.cellSide *
@@ -68,7 +68,7 @@ class SnakePainter extends CustomPainter {
     );
     // highlight
     canvas.drawCircle(
-      Offset(state.bounty.location.x + .58, state.bounty.location.y + .40) *
+      Offset(state.bounty.position.x + .58, state.bounty.position.y + .40) *
               config.cellSide +
           config.padding,
       config.cellSide *
@@ -140,7 +140,7 @@ class SnakePainter extends CustomPainter {
           shadowsPaint,
         ));
 
-    if (state.snake.dead)
+    if (state.snake.isDead)
       canvas.drawCircle(
         Offset(
                   state.snake.head.x + .5,
@@ -163,6 +163,6 @@ class SnakePainter extends CustomPainter {
   }
 
   bool shouldRepaint(CustomPainter oldDelegate) {
-    return !(state.paused && state.snake.dead);
+    return !(state.paused && state.snake.isDead);
   }
 }

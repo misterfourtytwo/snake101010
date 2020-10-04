@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:snake101010/providers/game_state.dart';
-import 'package:uic/inline_text_field.dart';
+// import 'package:uic/inline_text_field.dart';
 
 class GoOverlay extends StatefulWidget {
   const GoOverlay({Key key}) : super(key: key);
@@ -71,19 +71,19 @@ class _GoOverlayState extends State<GoOverlay> {
                           style: Theme.of(context).textTheme.headline1,
                         )
                       : Container(
-                          child: InlineTextField(
-                            // text: state.playerName,
-                            child: Text(
-                              '${state.playerName}',
-                              style: Theme.of(context).textTheme.headline1,
-                            ),
-                            onEditingComplete: (newName) {
-                              state.playerName = newName;
-                              setState(() => state.saved = true);
-                            },
-                            styleEditing: Theme.of(context).textTheme.headline1,
+                          // child: InlineTextField(
+                          //   // text: state.playerName,
+                          //   child: Text(
+                          //     '${state.playerName}',
+                          //     style: Theme.of(context).textTheme.headline1,
+                          //   ),
+                          //   onEditingComplete: (newName) {
+                          //     state.playerName = newName;
+                          //     setState(() => state.saved = true);
+                          //   },
+                          //   styleEditing: Theme.of(context).textTheme.headline1,
+                          // ),
                           ),
-                        ),
                 ],
               ),
             ),

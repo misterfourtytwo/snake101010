@@ -1,54 +1,32 @@
-import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-import 'package:snake101010/providers/config.dart';
-import 'package:snake101010/providers/game_state.dart';
-import 'package:snake101010/providers/scoreboard.dart';
-import 'package:snake101010/view/game/view.dart';
-import 'package:snake101010/view/menu.dart';
-import 'package:snake101010/view/scoreboard.dart';
-import 'package:snake101010/view/settings.dart';
+import 'package:snake101010/app.dart';
+import 'package:snake101010/exports.dart';
 
-void main() {
-  // _initDb();
-  _initServices();
-  runApp(Main());
+void main() async {
+  await _initHive();
+  runApp(App());
 }
 
-final _sl = GetIt.instance;
-_initServices() {
-  _sl.registerSingleton<Config>(Config());
-  _sl.registerSingleton<GameState>(GameState());
-  _sl.registerSingleton<ScoreBoard>(ScoreBoard());
-}
+const _desktopDbPath = './db';
 
-class Main extends StatelessWidget {
-  const Main({Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      // showPerformanceOverlay: true,
-      title: "Snake",
-      theme: ThemeData(
-        fontFamily: 'VT323',
-        textTheme: TextTheme(
-            headline1: TextStyle(color: Colors.white),
-            headline2: TextStyle(color: Colors.white)),
-      ),
-      initialRoute: '/menu',
-      routes: {
-        '/menu': (context) => MenuView(),
-        '/game': (context) {
-          if (ModalRoute.of(context).settings.arguments != null &&
-              ModalRoute.of(context).settings.arguments as bool)
-            _sl<GameState>().reset();
-          return GameView();
-        },
-        '/scoreboard': (context) => ScoreboardView(),
-        '/settings': (context) => SettingsView(),
-      },
-      // color: Colors.black,
-    );
+/// open database and boxes in it
+_initHive() async {
+  if (isNotDesktop) {
+    await Hive.initFlutter();
+  } else {
+    Hive.init(_desktopDbPath);
   }
+
+  // Hive.registerAdapter()
+  // Hive.registerAdapter(SnakeAdapter());
+
+  await Hive.openBox('config');
+  await Hive.openBox('state')
+      // ..clear()
+      ;
+  await Hive.openBox('scoreboard')
+      // ..clear()
+      ;
 }
